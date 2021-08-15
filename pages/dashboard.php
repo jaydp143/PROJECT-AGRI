@@ -180,7 +180,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>DASHBOARD</h1>
+            <h1>ACCOMPLISHMENT</h1>
             <p><?php echo $season." SEASON ".$seasonYear."-".$year."| AS OF ".date_format(date_create($dateNow),"F d, Y");?></p>
           </div>
           

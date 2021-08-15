@@ -100,7 +100,7 @@
     "fastclick": "^1.0.6",
     "filterizr": "^2.2.4",
     "flag-icon-css": "^3.5.0",
-    "flot": "^4.2.1",
+    "flot": "^4.2.2",
     "fs-extra": "^9.0.1",
     "fullcalendar": "^5.4.0",
     "icheck-bootstrap": "^3.0.1",

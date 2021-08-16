@@ -4,11 +4,8 @@
       <img src="../dist/img/pang.png" alt="Pangasinan Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">PANGASINAN AGRI</span>
     </a>
-
     <!-- Sidebar -->
     <div class="sidebar">
-        
-
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -23,58 +20,6 @@
                 </a>
             </li>
           
-          
-          <li class="nav-item <?php echo $monitoring_nav_item; ?>">
-            <a href="#" class="nav-link <?php echo $monitoring_nav_link; ?>">
-              <i class="fas fa-desktop"></i>
-              <p>
-                CROP MONITORING
-                <i class="fas fa-angle-left right"></i>
-                <!-- <span class="badge badge-info right">6</span> -->
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="planting_monitoring.php" class="nav-link <?php echo $pl_monitoring; ?>">
-                <i class="fas fa-angle-right"></i>
-                  <p> PLANTING ACCOMP.</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="add_planting_accomplishment2.php" class="nav-link <?php echo $pl_monitoring; ?>">
-                <i class="fas fa-angle-right"></i>
-                  <p> DATA ENTRY.</p>
-                </a>
-              </li>
-              
-              <li class="nav-item">
-                <a href="harvest_monitoring.php" class="nav-link <?php echo $hr_monitoring; ?>">
-                <i class="fas fa-angle-right"></i>
-                  <p>HARVEST ACCOMP.</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="crop_schedule.php" class="nav-link <?php echo $cr_sched; ?>">
-                <i class="fas fa-angle-right"></i>
-                  <p>CROP SCHEDULE</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="crop_stages.php" class="nav-link <?php echo $cr_stage; ?>">
-                <i class="fas fa-angle-right"></i>
-                  <p>CROP STAGES</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="damage_monitoring.php" class="nav-link <?php echo $dm_ass; ?>">
-                <i class="fas fa-angle-right"></i>
-                  <p>DAMAGE ASSESSTMENT</p>
-                </a>
-              </li>
-
-            </ul>
-          </li>
-
           <li class="nav-item <?php echo $pl_monitoring_nav_item; ?>">
             <a href="#" class="nav-link <?php echo $pl_monitoring_nav_link; ?>">
               <i class="fas fa-leaf"></i>

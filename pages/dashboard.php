@@ -6,117 +6,8 @@
     require('./save_new_pass.php');
     require('./save_new_profile.php');
     require('./user_data.php');
-   
-    function getAccomplishmentHarvesting($municipality) {
-      require('./database.php');
-      require('./season.php');
-      $query = mysqli_query($connection,"SELECT  (SELECT COALESCE(SUM(area), 0) AS ar  FROM tbl_harvesting as pl WHERE pl.mun_id=$municipality AND  pl.date_monitored BETWEEN '".$startdate."' AND '".$enddate."') as area,
-      (SELECT COALESCE(SUM(target),0) as t FROM tbl_target as tr WHERE tr.mun_id=$municipality AND tr.year='$seasonYear' AND tr.program='HARVESTING')as target,
-      (((SELECT COALESCE(SUM(area), 0) AS ar  FROM tbl_harvesting as pl WHERE pl.mun_id=$municipality AND  pl.date_monitored BETWEEN '".$startdate."' AND '".$enddate."')/(SELECT COALESCE(SUM(target),0) as t FROM tbl_target as tr WHERE tr.mun_id=$municipality AND tr.year='$seasonYear' AND tr.program='HARVESTING'))*100) as percentage");
-      $row = mysqli_fetch_array($query);
-      $percent= round($row['percentage']);
-      if ($percent>100){
-        echo "filred";
-      }
-      if (($percent<=100)&&($percent>75)){
-        echo "filgreen";
-      }
-      if (($percent<=75)&&($percent>50)){
-        echo "filblue";
-      }
-      if (($percent<=50)&&($percent>25)){
-        echo "filorange";
-      }
-      if ($percent<=25){
-        echo "filyellow";
-      }
-     
-    }
-    function getAccomplishment($municipality) {
-      require('./database.php');
-      require('./season.php');
-      $query = mysqli_query($connection,"SELECT  (SELECT COALESCE(SUM(areas), 0) AS ar  FROM tbl_planting as pl WHERE pl.mun_id=$municipality AND  pl.date_monitored BETWEEN '".$startdate."' AND '".$enddate."') as area,
-      (SELECT COALESCE(SUM(target),0) as t FROM tbl_target as tr WHERE tr.mun_id=$municipality AND tr.year='$seasonYear' AND tr.program='PLANTING')as target,
-      (((SELECT COALESCE(SUM(areas), 0) AS ar  FROM tbl_planting as pl WHERE pl.mun_id=$municipality AND  pl.date_monitored BETWEEN '".$startdate."' AND '".$enddate."')/(SELECT COALESCE(SUM(target),0) as t FROM tbl_target as tr WHERE tr.mun_id=$municipality AND tr.year='$seasonYear' AND tr.program='PLANTING'))*100) as percentage");
-      $row = mysqli_fetch_array($query);
-      $percent= round($row['percentage']);
-      if ($percent>100){
-        echo "filred";
-      }
-      if (($percent<=100)&&($percent>75)){
-        echo "filgreen";
-      }
-      if (($percent<=75)&&($percent>50)){
-        echo "filblue";
-      }
-      if (($percent<=50)&&($percent>25)){
-        echo "filorange";
-      }
-      if ($percent<=25){
-        echo "filyellow";
-      }
-      
-      
-      
-
-      
-    }
-
-    function getRank($municipality) {
-      require('./database.php');
-      require('./season.php');
-      $query = mysqli_query($connection,"SELECT mn.mun_id,
-      (SELECT COALESCE(SUM(area), 0) FROM tbl_harvesting as hr WHERE hr.mun_id=mn.mun_id )as yield,
-        (RANK() OVER(ORDER BY (SELECT COALESCE(SUM(area), 0) FROM tbl_harvesting as hr WHERE hr.mun_id=mn.mun_id ) DESC))as Rank
-        FROM tbl_harvesting as mn
-        GROUP BY mn.mun_id  ORDER BY Rank");
-    
-      $r=0;
-      while($row = mysqli_fetch_array($query)){
-         if($municipality==$row['mun_id']){
-            $r=$row['Rank'];
-            
-         }        
-      }
-      switch($r){
-        case 1:
-          echo"filred"; //purple
-          break;
-        case 2:
-          echo"filmaroon"; // blue
-          break;
-        case 3:
-          echo"filpurple"; //green
-          break;
-        case 4:
-          echo"filindigo"; // orange
-          break;
-        case 5:
-          echo"filblue"; // red
-          break;
-        case 6:
-          echo"filgreen"; // red
-          break;
-        case 7:
-          echo"filyellowgreen"; // red
-          break;
-        case 8:
-          echo"filorange"; // red
-          break;
-        case 9:
-          echo"filyellow"; // red
-          break;
-        case 10:
-          echo"filred"; // red
-          break;
-        default:
-          echo"filgray"; //pink
-
-      } 
-      
-
-      
-    }
+    require('./query.php');
+ 
    
 ?>
 
@@ -144,11 +35,11 @@
   .filpurple {fill:#4A148C} 
   .filindigo {fill:#1A237E} 
   .filblue {fill:#01579B}
-  .filgreen {fill:#1B5E20}
-  .filyellowgreen {fill:#33691E}
-  .filorange {fill:#F57F17}
-  .filyellow {fill:#FFC107}
-  .filred0 {fill:#FFC107}
+  .filgreen {fill:#558B2F}
+  .filyellowgreen {fill:#9CCC65}
+  .filorange {fill:#F39C12}
+  .filyellow {fill:#FFEB3B}
+  .filred0 {fill:#FFF59D}
   .filgray {fill:#CFD8DC }
   .filBlack {fill:#000000 }
   path{ fill: #d3d3d3; transition: .6s fill;}
@@ -180,7 +71,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>ACCOMPLISHMENT</h1>
+            <h1>DASHBOARD</h1>
             <p><?php echo $season." SEASON ".$seasonYear."-".$year."| AS OF ".date_format(date_create($dateNow),"F d, Y");?></p>
           </div>
           
@@ -510,7 +401,7 @@
                         <rect class="filorange" x="5499.16" y="509.96" width="564.49" height="72.3"/>
                         <rect class="filgreen" x="6628.93" y="510.23" width="564.49" height="72.3"/>
                         <rect class="filred" x="7194.07" y="510.29" width="564.49" height="72.3"/>
-                        <text x="5359.63" y="457.5"  class="fil5 fnt0">RICE PLANTING ACCOMPLISHMENT</text>
+                        <text x="5359.63" y="457.5"  class="filblack fnt0">RICE PLANTING ACCOMPLISHMENT</text>
                         <text x="4902.54" y="673.27"  class="filblack fnt1">0%</text>
                         <text x="5453.49" y="671.46"  class="filblack fnt1">25%</text>
                         <text x="6019.54" y="668.25"  class="filblack fnt1">50%</text>
@@ -745,7 +636,7 @@
                         <rect class="filorange" x="5499.16" y="509.96" width="564.49" height="72.3"/>
                         <rect class="filgreen" x="6628.93" y="510.23" width="564.49" height="72.3"/>
                         <rect class="filred" x="7194.07" y="510.29" width="564.49" height="72.3"/>
-                        <text x="5359.63" y="457.5"  class="fil5 fnt0">RICE HARVESTING ACCOMPLISHMENT</text>
+                        <text x="5359.63" y="457.5"  class="filblack fnt0">RICE HARVESTING ACCOMPLISHMENT</text>
                         <text x="4902.54" y="673.27"  class="filblack fnt1">0%</text>
                         <text x="5453.49" y="671.46"  class="filblack fnt1">25%</text>
                         <text x="6019.54" y="668.25"  class="filblack fnt1">50%</text>
@@ -964,38 +855,20 @@
    <glyph unicode="N" horiz-adv-x="722" d="M73.0072 0l0 716.011 140.318 0 294.661 -479.828 0 479.828 134.009 0 0 -716.011 -144.825 0 -290.154 470.671 0 -470.671 -134.009 0z"/>
    <glyph unicode="R" horiz-adv-x="722" d="M73.0072 0l0 716.011 304.503 0c76.5043,0 132.17,-6.52558 166.817,-19.3604 34.8271,-12.8348 62.5158,-35.6563 83.3544,-68.5006 20.8025,-32.9884 31.33,-70.4835 31.33,-112.81 0,-53.827 -15.683,-98.1721 -47.1933,-133.18 -31.4742,-35.0074 -78.4872,-56.9997 -141.147,-66.1571 31.1497,-18.1707 56.8194,-38.18 77.009,-59.9921 20.3339,-21.8481 47.662,-60.6771 81.9844,-116.343l87.3202 -139.669 -172.802 0 -103.688 156.325c-37.1706,55.5215 -62.66,90.4928 -76.5043,105.022 -13.6641,14.313 -28.1573,24.3357 -43.4798,29.6355 -15.5028,5.33583 -39.8385,8.00375 -73.1874,8.00375l-29.311 0 0 -298.987 -145.005 0zm145.005 412.986l107.005 0c69.3298,0 112.485,3.02845 129.827,8.83297 17.1612,5.84057 30.8253,16.0075 40.4874,30.3566 9.84245,14.313 14.6735,32.3395 14.6735,53.827 0,24.1555 -6.48953,43.4798 -19.3244,58.5139 -12.8348,14.8178 -31.0055,24.1555 -54.3318,27.9771 -11.8614,1.65843 -47.013,2.5237 -105.527,2.5237l-112.81 0 0 -182.031z"/>
   </font>
-  <style type="text/css">
-   <![CDATA[
-    @font-face { font-family:"Arial";font-variant:normal;font-style:normal;font-weight:normal;src:url("#FontID1") format(svg)}
-    @font-face { font-family:"Arial";font-variant:normal;font-style:normal;font-weight:bold;src:url("#FontID0") format(svg)}
-    .fil10 {fill:#373435}
-    .fil4 {fill:#FFF212}
-    .fil1 {fill:#84716B}
-    .fil5 {fill:#F7ADAF}
-    .fil3 {fill:#F58634}
-    .fil9 {fill:#EC268F}
-    .fil0 {fill:#ED3237}
-    .fil7 {fill:#A8518A}
-    .fil6 {fill:#00AFEF}
-    .fil2 {fill:#00A859}
-    .fil8 {fill:#3E4095}
-    .fnt1 {font-weight:normal;font-size:95.57px;font-family:'Arial'}
-    .fnt0 {font-weight:bold;font-size:109.2px;font-family:'Arial'}
-   ]]>
-  </style>
+  
  </defs>
  <g id="Layer_x0020_1">
   <metadata id="CorelCorpID_0Corel-Layer"/>
-  <rect class="fil0" transform="matrix(1.42331E-13 -3.20651 0.86066 1.35969E-14 7316.94 2328.38)" width="105.01" height="84.01"/>
-  <rect class="fil1" transform="matrix(1.42331E-13 -3.20651 0.86066 1.35969E-14 7317.61 4014.28)" width="105.01" height="84.01"/>
-  <rect class="fil2" transform="matrix(1.42331E-13 -3.20651 0.86066 1.35969E-14 7316.72 1654.19)" width="105.01" height="84.01"/>
-  <rect class="fil3" transform="matrix(1.42331E-13 -3.20651 0.86066 1.35969E-14 7317.39 3340.1)" width="105.01" height="84.01"/>
-  <rect class="fil4" transform="matrix(1.42331E-13 -3.20651 0.86066 1.35969E-14 7316.81 1991.15)" width="105.01" height="84.01"/>
-  <rect class="fil5" transform="matrix(1.42331E-13 -3.20651 0.86066 1.35969E-14 7317.48 3677.05)" width="105.01" height="84.01"/>
-  <rect class="fil6" transform="matrix(1.42331E-13 -3.20651 0.86066 1.35969E-14 7317.07 1317.23)" width="105.01" height="84.01"/>
-  <rect class="fil7" transform="matrix(1.42331E-13 -3.20651 0.86066 1.35969E-14 7317.74 3003.14)" width="105.01" height="84.01"/>
-  <rect class="fil8" transform="matrix(1.42386E-13 -3.20651 0.86066 1.3601E-14 7317.13 980.126)" width="105.01" height="84.01"/>
-  <rect class="fil9" transform="matrix(1.42386E-13 -3.20651 0.86066 1.3601E-14 7317.02 2666.03)" width="105.01" height="84.01"/>
+  <rect class="filgreen" transform="matrix(1.42331E-13 -3.20651 0.86066 1.35969E-14 7316.94 2328.38)" width="105.01" height="84.01"/>
+  <rect class="filred" transform="matrix(1.42331E-13 -3.20651 0.86066 1.35969E-14 7317.61 4014.28)" width="105.01" height="84.01"/>
+  <rect class="filorange" transform="matrix(1.42331E-13 -3.20651 0.86066 1.35969E-14 7316.72 1654.19)" width="105.01" height="84.01"/>
+  <rect class="filpurple" transform="matrix(1.42331E-13 -3.20651 0.86066 1.35969E-14 7317.39 3340.1)" width="105.01" height="84.01"/>
+  <rect class="filyellowgreen" transform="matrix(1.42331E-13 -3.20651 0.86066 1.35969E-14 7316.81 1991.15)" width="105.01" height="84.01"/>
+  <rect class="filmaroon" transform="matrix(1.42331E-13 -3.20651 0.86066 1.35969E-14 7317.48 3677.05)" width="105.01" height="84.01"/>
+  <rect class="filyellow" transform="matrix(1.42331E-13 -3.20651 0.86066 1.35969E-14 7317.07 1317.23)" width="105.01" height="84.01"/>
+  <rect class="filindigo" transform="matrix(1.42331E-13 -3.20651 0.86066 1.35969E-14 7317.74 3003.14)" width="105.01" height="84.01"/>
+  <rect class="filred0" transform="matrix(1.42386E-13 -3.20651 0.86066 1.3601E-14 7317.13 980.126)" width="105.01" height="84.01"/>
+  <rect class="filblue" transform="matrix(1.42386E-13 -3.20651 0.86066 1.3601E-14 7317.02 2666.03)" width="105.01" height="84.01"/>
   <text x="7143.22" y="534.07"  class="fil10 fnt0">RANKING</text>
   <text x="7202.67" y="1008.63"  class="fil10 fnt1">10</text>
   <text x="7258.27" y="4056.45"  class="fil10 fnt1">1</text>

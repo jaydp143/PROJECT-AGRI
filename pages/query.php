@@ -1,5 +1,51 @@
  
  <?php
+
+    function getPlantingPercentage($municipality) {
+      require('./database.php');
+      require('./season.php');
+      $query = mysqli_query($connection,"SELECT  (SELECT COALESCE(SUM(areas), 0) AS ar  FROM tbl_planting as pl WHERE pl.mun_id=$municipality AND  pl.date_monitored BETWEEN '".$startdate."' AND '".$enddate."') as area,
+      (SELECT COALESCE(SUM(target),0) as t FROM tbl_target as tr WHERE tr.mun_id=$municipality AND tr.year='$seasonYear' AND tr.program='PLANTING')as target,
+      (((SELECT COALESCE(SUM(areas), 0) AS ar  FROM tbl_planting as pl WHERE pl.mun_id=$municipality AND  pl.date_monitored BETWEEN '".$startdate."' AND '".$enddate."')/(SELECT COALESCE(SUM(target),0) as t FROM tbl_target as tr WHERE tr.mun_id=$municipality AND tr.year='$seasonYear' AND tr.program='PLANTING'))*100) as percentage");
+      $row = mysqli_fetch_array($query);
+      $percent= round($row['percentage']);
+      echo $percent;
+    }
+
+
+    function getPlantingArea($municipality) {
+      require('./database.php');
+      require('./season.php');
+      $query = mysqli_query($connection,"SELECT  (SELECT COALESCE(SUM(areas), 0) AS ar  FROM tbl_planting as pl WHERE pl.mun_id=$municipality AND  pl.date_monitored BETWEEN '".$startdate."' AND '".$enddate."') as area,
+      (SELECT COALESCE(SUM(target),0) as t FROM tbl_target as tr WHERE tr.mun_id=$municipality AND tr.year='$seasonYear' AND tr.program='PLANTING')as target,
+      (((SELECT COALESCE(SUM(areas), 0) AS ar  FROM tbl_planting as pl WHERE pl.mun_id=$municipality AND  pl.date_monitored BETWEEN '".$startdate."' AND '".$enddate."')/(SELECT COALESCE(SUM(target),0) as t FROM tbl_target as tr WHERE tr.mun_id=$municipality AND tr.year='$seasonYear' AND tr.program='PLANTING'))*100) as percentage");
+      $row = mysqli_fetch_array($query);
+      $area=number_format($row['area'],2);
+      echo $area;
+        
+    }
+
+    function getHarvestingDetails($municipality) {
+      require('./database.php');
+      require('./season.php');
+      $query = mysqli_query($connection,"SELECT mn.mun_id,mn.municipality, 
+        (SELECT target FROM tbl_target as tr WHERE tr.mun_id='".$municipality."' AND tr.program='HARVESTING'AND tr.season='".$season."' AND year='".$seasonYear."')target,
+        (SELECT COALESCE(SUM(area), 0) FROM tbl_harvesting as pl WHERE pl.mun_id='".$municipality."' AND   date_monitored BETWEEN '".$startdate."' AND '".$enddate."')area, 
+        (SELECT COALESCE(SUM(production), 0) FROM tbl_harvesting as pl WHERE pl.mun_id='".$municipality."' AND  date_monitored BETWEEN '".$startdate."' AND '".$enddate."')production,
+        ((SELECT COALESCE(SUM(production), 0) FROM tbl_harvesting as pl WHERE pl.mun_id='".$municipality."' AND  date_monitored BETWEEN '".$startdate."' AND '".$enddate."')/(SELECT COALESCE(SUM(area), 0) FROM tbl_harvesting as pl WHERE pl.mun_id='".$municipality."' AND   date_monitored BETWEEN '".$startdate."' AND '".$enddate."'))yield,
+        (((SELECT COALESCE(SUM(area), 0) FROM tbl_harvesting as pl WHERE pl.mun_id='".$municipality."' AND   date_monitored BETWEEN '".$startdate."' AND '".$enddate."')/(SELECT target FROM tbl_target as tr WHERE tr.mun_id='".$municipality."' AND tr.program='HARVESTING' AND tr.season='".$season."' AND year='".$seasonYear."'))*100) percentageM
+        FROM tbl_municipality as mn WHERE mn.mun_id='".$municipality."' ORDER BY  mn.mun_id ASC;");
+      $row = mysqli_fetch_array($query);
+      $mun_name=$row['municipality'];
+      $areaharvested=number_format($row['area'],2);
+      $production=number_format($row['production'],2);
+      $yield=number_format($row['yield'],2);
+      $harvestPercentage=number_format($row['percentageM'],2);
+      echo "MUNICIPALITY: ".$mun_name."\n AREA HARVESTED: ".$areaharvested." ha \n PRODUCTION: ".$production." \n YIELD: ".$yield." \n PERCENTAGE: ".$harvestPercentage."%";
+        
+    }
+
+
     function getAccomplishmentHarvesting($municipality) {
       require('./database.php');
       require('./season.php');

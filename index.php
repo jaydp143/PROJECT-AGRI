@@ -1,3 +1,10 @@
+<?php 
+  session_start();
+
+  function pathTo($destination) {
+    echo "<script>window.location.href = './pages/$destination.php'</script>";
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +26,7 @@
   <!-- /.login-logo -->
   <div class="card card-outline card-success ">
     <div class="card-header text-center bg-success">
-    <img src="dist/img/pang.png" alt="Pangasinan Logo"  width="50" height="50" class="d-inline-block" alt=""">
+    <img src="dist/img/pang.png" alt="Pangasinan Logo"  width="50" height="50" class="d-inline-block" alt="">
     <br>
       <a href="dashboard.php" class="h5">PROVINCIAL AGRICULTURE OFFICE</a>
       <br>
@@ -28,7 +35,7 @@
     <div class="card-body">
       <p class="login-box-msg">Sign in to start your session</p>
 
-      <form class="user" role="form" name="login_form" method="POST" action="./pages/login.php">
+      <form class="user" role="form" name="login_form" method="POST" action="login.php">
         <div class="input-group mb-3">
           <input type="text" class="form-control" id="username_id" name="username" placeholder="Username">
           <div class="input-group-append ">
@@ -56,6 +63,28 @@
           <!-- /.col -->
         </div>
       </form>
+      <?php
+				if(isset($_SESSION['error'])){
+					?>
+					<div class="alert alert-danger text-center" role="alert" style="margin-top:20px;">
+						<?php echo $_SESSION['error']; ?>
+					</div>
+					<?php
+					unset($_SESSION['error']);
+				}
+
+				if(isset($_SESSION['success'])){
+					?>
+					<div class="alert alert-success text-center" style="margin-top:20px;">
+						<?php echo $_SESSION['success']; 
+            pathTo('dashboard');
+            ?>
+					</div>
+					<?php
+
+					unset($_SESSION['success']);
+				}
+			?>
 
     </div>
     <!-- /.card-body -->

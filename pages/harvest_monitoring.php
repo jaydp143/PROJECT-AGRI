@@ -108,7 +108,6 @@
                                         $br="";
                                     }
 
-
                                     echo '<td colspan="2"><b>PANGASINAN</b></td>';
                                     echo '<td><b>'.number_format($row1['target'],2).'</b></td>';
                                     echo'<td><b>'.number_format($row1['tarea'],2).'</b></td>';

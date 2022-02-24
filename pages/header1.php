@@ -2,7 +2,7 @@
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><p class="fas fa-bars text-light"> RICE CROP MONITORING SYSTEM</p> </a>
+        <a class="nav-link collapsed" data-widget="pushmenu" data-toggle="collapse" href="#" role="button"><p class="fas fa-bars text-light"> RICE CROP MONITORING SYSTEM</p> </a>
       </li>
     </ul>
     <!-- Right navbar links -->

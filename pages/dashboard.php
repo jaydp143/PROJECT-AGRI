@@ -30,15 +30,15 @@
 
 <style>
   .str0 {stroke:white;stroke-width:2}
-  .filred {fill:#B71C1C} 
+  .filred {fill:#990000} 
   .filmaroon {fill:#880E4F} 
   .filpurple {fill:#4A148C} 
   .filindigo {fill:#1A237E} 
-  .filblue {fill:#01579B}
-  .filgreen {fill:#558B2F}
+  .filblue {fill:#002266}
+  .filgreen {fill:#003300}
   .filyellowgreen {fill:#9CCC65}
-  .filorange {fill:#F39C12}
-  .filyellow {fill:#FFEB3B}
+  .filorange {fill:#ff6600}
+  .filyellow {fill: #e6b800}
   .filred0 {fill:#FFF59D}
   .filgray {fill:#CFD8DC }
   .filBlack {fill:#000000 }

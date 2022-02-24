@@ -1,21 +1,12 @@
 <?php 
-  require('../pages/database.php');
+  require('./pages/database.php');
 
   session_start();
 
-  /* Functions */
-  function pathTo($destination) {
-    echo "<script>window.location.href = '../pages/$destination.php'</script>";
-  }
 
-  if (empty($_SESSION['status'])) {
-    /* Set Default Invalid */
-    $_SESSION['status'] = 'invalid';
-  }
-
-  if ($_SESSION['status'] == 'valid') {
-    pathTo('dashboard');
-  }
+  //if ($_SESSION['status'] == 'valid') {
+    //pathTo('dashboard');
+  //}
   //1. 1 corinthian 3:8- the one who plants and the one who waters crewarded in your oown effoorts..
   //2. efesian 2:10-god made us to do goood woorks.
  //3. psalm 1:1-7 god delights in you. if you putyour hope in god.
@@ -25,7 +16,7 @@
     $password = trim($_POST['password']);
 
     if (empty($username) || empty($password)) {
-      echo "Please fill up all fields";
+      $_SESSION['error'] = 'Please fill up all fields';
     } else {
       $queryValidate = "SELECT * FROM tbl_users WHERE username = '$username' AND password = md5('$password')";
       $sqlValidate = mysqli_query($connection, $queryValidate);
@@ -33,6 +24,7 @@
 
       if (mysqli_num_rows($sqlValidate) > 0) {
         $_SESSION['status'] = 'valid';
+        $_SESSION['success'] = 'Login successful';
         $_SESSION['username'] = $rowValidate['username'];
         $_SESSION['id']=$rowValidate['id'];
         $_SESSION['password']=$rowValidate['password'];
@@ -48,15 +40,14 @@
         $_SESSION['municipality']=$rowValidate['municipality'];
         $_SESSION['province']=$rowValidate['province'];
         $_SESSION['userlevel']=$rowValidate['userlevel'];
-        
-        pathTo('dashboard');
+        //pathTo('dashboard');
       } 
       else {
         $_SESSION['status'] = 'invalid';
-
-        echo 'Invalid Credential';
+        $_SESSION['error'] = 'Please fill up all fields correctly';
       }
     }
   }
+  header('location: index.php');
 ?>
 

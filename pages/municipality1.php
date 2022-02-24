@@ -134,7 +134,7 @@ if (isset($_POST['deleteBtn']))
                                   <a href="#editModal<?php echo $row['mun_id']; ?>" class="btn btn-info btn-sm" data-toggle="modal">
                                   <i class="fa fa-edit" aria-hidden="true"></i>
                                   </a>
-                                  <button type="submit" class="btn btn-danger btn-sm"onclick="confirm_del();return false;" name="deleteBtn" id="deleteBtn" title="Delete User" id="Delete_id" >
+                                  <button type="submit" class="btn btn-danger btn-sm" onclick="confirm_del();return false;" name="deleteBtn" id="deleteBtn" title="Delete User" id="Delete_id" >
                                   <i class="fas fa-trash"></i>
                                   </button>
                                 </form> 

@@ -33,13 +33,19 @@
               <li class="nav-item">
                 <a href="planting_monitoring.php" class="nav-link <?php echo $pl_monitoring; ?>">
                 <i class="fas fa-leaf"></i>
-                  <p> ACCOMPLISHMENT</p>
+                  <p><small> ACCOMPLISHMENT</small></p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="planting_accomplishment_map.php" class="nav-link <?php echo $pl_monitoring_map; ?>">
+                <i class="fas fa-leaf"></i>
+                  <p><small> ACCOMPLISHMENT MAP</small></p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="add_planting_accomplishment2.php" class="nav-link <?php echo $pl_monitoring_add; ?>">
                 <i class="fas fa-leaf"></i>
-                  <p> ADD ENTRY</p>
+                  <p><small> ADD PLANTING ACCOMPLISHMENT</small></p>
                 </a>
               </li>
             </ul>

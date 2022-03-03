@@ -47,11 +47,11 @@
             <h1>PLANTING MONITORING ACCOMPLISHMENT</h1>
             <p><?php echo $season." SEASON ".$seasonYear."-".$year."| AS OF ".date_format(date_create($dateNow),"F d, Y");?></p>
           </div>
-          <div class="col-sm-4">
+          <!-- <div class="col-sm-4">
             <a href="add_planting_accomplishment.php" class="btn bg-gradient-info float-right" >
               <i class="fa fa-plus" aria-hidden="true"> </i> ADD ACCOMPLISHMENT
             </a>
-          </div>
+          </div> -->
           
         </div>
       </div><!-- /.container-fluid -->
@@ -60,7 +60,70 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-        <div class="row">  
+
+       <!-- /.div for FORM -->
+       <div class="row">
+            <form method="POST">
+                <div class="pull-right">
+                    <div class="form-row">
+                        <!--display year combobox -->
+                        <div class="form-group">
+                            <div class="col-auto">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text text-light" style="background-color:#004d00;"><b>SEASON:</b></div>
+                                    </div>
+                                        <input type="text" list="season_list" id="display_season" name="rp_season" class="form-control display_season" autocomplete="off" />
+                                        <datalist class="season_list" id="season_list">
+                                            <option value="WET">WET</option>
+                                            <option value="DRY">DRY</option>
+                                        </datalist>
+                                </div>
+                            </div>
+                        </div><!-- end display year combobox -->
+                        <!--display year combobox -->
+                        <div class="form-group">
+                            <div class="col-auto">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text text-light" style="background-color:#004d00;"><b>YEAR:</b></div>
+                                    </div>
+                                    
+                                        <input type="text" list="year_list" id="display_year" name="rp_year" class="form-control display_year" autocomplete="off" />
+                                        <datalist class="year_list" id="year_list">
+                                            <option value="2021">2021</option>
+                                            <option value="2022">2022</option>
+                                        </datalist>
+                                </div>
+                            </div>
+                        </div><!-- end display year combobox -->
+
+                        <!--display generate button -->
+                        <div class="form-group">
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-danger btn-block" id="btn_filter" name="btn_filter"><i class="fas fa-filter"></i><b> FILTER</b></button>
+                            </div>
+                        </div><!-- end display generate button -->
+
+
+                    </div>
+                </div>
+            </form>
+        </div>
+        <?php
+        if (isset($_POST['btn_filter'])) {
+          $seasonYear=$_POST['rp_year'];
+          $season=$_POST['rp_season'];
+          if($season=="WET"){
+            $startdate=date('Y-m-d', strtotime("03/16/".$seasonYear));
+            $enddate=date('Y-m-d', strtotime("09/15/".$seasonYear));
+          }
+          if($season=="DRY"){
+            $startdate=date('Y-m-d', strtotime("09/16/".$seasonYear));
+            $enddate=date('Y-m-d', strtotime("03/15/".($seasonYear+1)));
+          }
+        ?>
+<div class="row">  
           <div class="col-md-12">
             <div class="table-responsive">
               <table class="table table-striped table-sm "  id="dataTables-example" style="text-align:center; width:100%">
@@ -81,6 +144,8 @@
                   
                   <?php
                     //PANGASINAN
+                   
+                   
                    echo '<tr style="background-color:#A5D6A7 ";>';
                     $queryP = mysqli_query($connection,"SELECT 
                     (SELECT COALESCE(SUM(target), 0) FROM tbl_target as tr WHERE tr.program='PLANTING' AND tr.season='".$season."' AND year='".$seasonYear."' )target,
@@ -224,6 +289,12 @@
             </div>
           </div>
         </div>
+        <?php
+        }
+        ?>
+        
+        <!-- /.end div for FORM -->
+        
       </div>
     </section>
     <!-- /.content -->

@@ -7,8 +7,6 @@
     require('./save_new_profile.php');
     require('./user_data.php');
     require('./query.php');
- 
-   
 ?>
 
 
@@ -26,7 +24,7 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
 </head>
-<body class="hold-transition sidebar-mini layout-navbar-fixed">
+<body class="hold-transition sidebar-mini sidebar-collapse">
 
 <style>
   .str0 {stroke:white;stroke-width:2}

@@ -19,7 +19,7 @@
     require_once('links.php')
   ?>
 </head>
-<body class="hold-transition sidebar-mini layout-navbar-fixed">
+<body class="hold-transition sidebar-mini sidebar-collapse">
 <!-- Site wrapper -->
 <div class="wrapper" >
   <!-- Navbar -->

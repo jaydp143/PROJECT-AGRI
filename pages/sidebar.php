@@ -32,20 +32,26 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="planting_monitoring.php" class="nav-link <?php echo $pl_monitoring; ?>">
-                <i class="fas fa-leaf"></i>
-                  <p><small> ACCOMPLISHMENT</small></p>
+                <small>
+                  <i class="fas fa-leaf"></i>
+                  <p> ACCOMPLISHMENT TABLE</p>
+                </small>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="planting_accomplishment_map.php" class="nav-link <?php echo $pl_monitoring_map; ?>">
-                <i class="fas fa-leaf"></i>
-                  <p><small> ACCOMPLISHMENT MAP</small></p>
+                <small>
+                  <i class="fas fa-leaf"></i>
+                  <p>ACCOMPLISHMENT MAP</p>
+                </small>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="add_planting_accomplishment2.php" class="nav-link <?php echo $pl_monitoring_add; ?>">
-                <i class="fas fa-leaf"></i>
-                  <p><small> ADD PLANTING ACCOMPLISHMENT</small></p>
+                <small>
+                  <i class="fas fa-leaf"></i>
+                  <p> ADD PLANTING ACCOMPLISHMENT</p>
+                </small>
                 </a>
               </li>
             </ul>
@@ -63,14 +69,26 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="harvest_monitoring.php" class="nav-link <?php echo $hr_monitoring; ?>">
-                <i class="fas fa-seedling"></i>
-                  <p>ACCOMPLISHMENT</p>
+                <small>
+                  <i class="fas fa-seedling"></i>
+                  <p>ACCOMPLISHMENT TABLE</p>
+                </small>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="harvesting_accomplishment_map.php" class="nav-link <?php echo $hr_monitoring_map; ?>">
+                <small>
+                  <i class="fas fa-leaf"></i>
+                  <p>ACCOMPLISHMENT MAP</p>
+                </small>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="add_harvest_accomplishment2.php" class="nav-link <?php echo $hr_monitoring_add; ?>">
-                <i class="fas fa-seedling"></i>
-                  <p>ADD ENTRY</p>
+                <small>
+                  <i class="fas fa-seedling"></i>
+                  <p>ADD HARVEST ACCOMPLISHMENT</p>
+                </small>
                 </a>
               </li>
 

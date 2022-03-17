@@ -38,10 +38,10 @@
   .filorange {fill:#ff6600}
   .filyellow {fill: #e6b800}
   .filred0 {fill:#FFF59D}
-  .filgray {fill:#CFD8DC }
-  .filBlack {fill:#000000 }
+  .filgray {fill:#CFD8DC}
+  .filBlack {fill:#000000}
   path{ fill: #d3d3d3; transition: .5s fill;}
-  path:hover{fill:#990000}
+  path:hover{fill:#8c8c8c}
   @font-face { font-family:"Arial";font-variant:normal;font-style:normal;font-weight:normal;src:url("#FontID1") format(svg)}
   @font-face { font-family:"Arial";font-variant:normal;font-style:normal;font-weight:bold;src:url("#FontID0") format(svg)}
   
@@ -67,7 +67,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
-        <div class="row mb-2">
+        <div class="row">
           <div class="col-sm-6">
             <h1>TOP PERFORMING MUNICPALITY IN TERMS OF PLANTING</h1>
             <p><?php echo $season." SEASON ".$seasonYear."-".$year."| AS OF ".date_format(date_create($dateNow),"F d, Y");?></p>
@@ -138,7 +138,7 @@
                   <h3 class="card-title">TOP PERFORMING MUNICPALITY IN TERMS OF PLANTING</h3>
 
                   <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+                  <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
                     </button>
                   </div>
                   <!-- /.card-tools -->
@@ -349,6 +349,7 @@
                         <rect class="filorange" x="5499.16" y="509.96" width="564.49" height="72.3"/>
                         <rect class="filgreen" x="6628.93" y="510.23" width="564.49" height="72.3"/>
                         <rect class="filred" x="7194.07" y="510.29" width="564.49" height="72.3"/>
+                        <text x="6000" y="357.5"  class="filblack fnt0"><?php echo $_POST['rp_season'].' SEASON '.$_POST['rp_year']  ?></text>
                         <text x="5359.63" y="457.5"  class="filblack fnt0">RICE PLANTING ACCOMPLISHMENT</text>
                         <text x="4902.54" y="673.27"  class="filblack fnt1">0%</text>
                         <text x="5453.49" y="671.46"  class="filblack fnt1">25%</text>

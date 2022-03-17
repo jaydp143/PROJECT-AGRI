@@ -1,4 +1,4 @@
-<nav class="main-header navbar navbar-collapse-md navbar-success navbar-dark">
+<nav class="main-header navbar navbar-expand-md navbar-success navbar-dark">
     <div class="container">
       <a href="dashbooard.php">
         <img src="../dist/img/pang.png" alt="Pangasinan Logo"  width="50" height="50" class="d-inline-block" alt=""">

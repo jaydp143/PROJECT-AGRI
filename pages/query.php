@@ -72,6 +72,38 @@
     function getHarvestingDetails($municipality) {
       require('./database.php');
       require('./season.php');
+      
+      $query = mysqli_query($connection,"SELECT mn.mun_id,mn.municipality, 
+        (SELECT target FROM tbl_target as tr WHERE tr.mun_id='".$municipality."' AND tr.program='HARVESTING'AND tr.season='".$season."' AND year='".$seasonYear."')target,
+        (SELECT COALESCE(SUM(area), 0) FROM tbl_harvesting as pl WHERE pl.mun_id='".$municipality."' AND   date_monitored BETWEEN '".$startdate."' AND '".$enddate."')area, 
+        (SELECT COALESCE(SUM(production), 0) FROM tbl_harvesting as pl WHERE pl.mun_id='".$municipality."' AND  date_monitored BETWEEN '".$startdate."' AND '".$enddate."')production,
+        ((SELECT COALESCE(SUM(production), 0) FROM tbl_harvesting as pl WHERE pl.mun_id='".$municipality."' AND  date_monitored BETWEEN '".$startdate."' AND '".$enddate."')/(SELECT COALESCE(SUM(area), 0) FROM tbl_harvesting as pl WHERE pl.mun_id='".$municipality."' AND   date_monitored BETWEEN '".$startdate."' AND '".$enddate."'))yield,
+        (((SELECT COALESCE(SUM(area), 0) FROM tbl_harvesting as pl WHERE pl.mun_id='".$municipality."' AND   date_monitored BETWEEN '".$startdate."' AND '".$enddate."')/(SELECT target FROM tbl_target as tr WHERE tr.mun_id='".$municipality."' AND tr.program='HARVESTING' AND tr.season='".$season."' AND year='".$seasonYear."'))*100) percentageM
+        FROM tbl_municipality as mn WHERE mn.mun_id='".$municipality."' ORDER BY  mn.mun_id ASC;");
+      $row = mysqli_fetch_array($query);
+      $mun_name=$row['municipality'];
+      $areaharvested=number_format($row['area'],2);
+      $production=number_format($row['production'],2);
+      $yield=number_format($row['yield'],2);
+      $harvestPercentage=number_format($row['percentageM'],2);
+      echo "MUNICIPALITY: ".$mun_name."\n AREA HARVESTED: ".$areaharvested." ha \n PRODUCTION: ".$production." \n YIELD: ".$yield." \n PERCENTAGE: ".$harvestPercentage."%";
+        
+    }
+
+    function getHarvestingDetailsPrevSeason($municipality,$season,$seasonYear) {
+      require('./database.php');
+      //require('./season.php');
+      $startdate="";
+      $enddate="";
+      if($season=="WET"){
+        $startdate=date('Y-m-d', strtotime("03/16/".$seasonYear));
+        $enddate=date('Y-m-d', strtotime("09/15/".$seasonYear));
+      }
+      if($season=="DRY"){
+        $startdate=date('Y-m-d', strtotime("09/16/".$seasonYear));
+        $enddate=date('Y-m-d', strtotime("03/15/".($seasonYear+1)));
+      }
+
       $query = mysqli_query($connection,"SELECT mn.mun_id,mn.municipality, 
         (SELECT target FROM tbl_target as tr WHERE tr.mun_id='".$municipality."' AND tr.program='HARVESTING'AND tr.season='".$season."' AND year='".$seasonYear."')target,
         (SELECT COALESCE(SUM(area), 0) FROM tbl_harvesting as pl WHERE pl.mun_id='".$municipality."' AND   date_monitored BETWEEN '".$startdate."' AND '".$enddate."')area, 
@@ -96,6 +128,42 @@
       $query = mysqli_query($connection,"SELECT  (SELECT COALESCE(SUM(area), 0) AS ar  FROM tbl_harvesting as pl WHERE pl.mun_id=$municipality AND  pl.date_monitored BETWEEN '".$startdate."' AND '".$enddate."') as area,
       (SELECT COALESCE(SUM(target),0) as t FROM tbl_target as tr WHERE tr.mun_id=$municipality AND tr.year='$seasonYear' AND tr.program='HARVESTING')as target,
       (((SELECT COALESCE(SUM(area), 0) AS ar  FROM tbl_harvesting as pl WHERE pl.mun_id=$municipality AND  pl.date_monitored BETWEEN '".$startdate."' AND '".$enddate."')/(SELECT COALESCE(SUM(target),0) as t FROM tbl_target as tr WHERE tr.mun_id=$municipality AND tr.year='$seasonYear' AND tr.program='HARVESTING'))*100) as percentage");
+      $row = mysqli_fetch_array($query);
+      $percent= round($row['percentage']);
+      if ($percent>100){
+        echo "filred";
+      }
+      if (($percent<=100)&&($percent>75)){
+        echo "filgreen";
+      }
+      if (($percent<=75)&&($percent>50)){
+        echo "filblue";
+      }
+      if (($percent<=50)&&($percent>25)){
+        echo "filorange";
+      }
+      if ($percent<=25){
+        echo "filyellow";
+      }
+    }
+
+    function getAccomplishmentHarvestingPrevSeason($municipality,$season,$seasonYear) {
+      require('./database.php');
+      //require('./season.php');
+      $startdate="";
+      $enddate="";
+      if($season=="WET"){
+        $startdate=date('Y-m-d', strtotime("03/16/".$seasonYear));
+        $enddate=date('Y-m-d', strtotime("09/15/".$seasonYear));
+      }
+      if($season=="DRY"){
+        $startdate=date('Y-m-d', strtotime("09/16/".$seasonYear));
+        $enddate=date('Y-m-d', strtotime("03/15/".($seasonYear+1)));
+      }
+
+      $query = mysqli_query($connection,"SELECT  (SELECT COALESCE(SUM(area), 0) AS ar  FROM tbl_harvesting as pl WHERE pl.mun_id=$municipality AND  pl.date_monitored BETWEEN '".$startdate."' AND '".$enddate."') as area,
+      (SELECT COALESCE(SUM(target),0) as t FROM tbl_target as tr WHERE tr.mun_id=$municipality AND tr.season='".$season."' AND tr.year='$seasonYear' AND tr.program='HARVESTING')as target,
+      (((SELECT COALESCE(SUM(area), 0) AS ar  FROM tbl_harvesting as pl WHERE pl.mun_id=$municipality AND  pl.date_monitored BETWEEN '".$startdate."' AND '".$enddate."')/(SELECT COALESCE(SUM(target),0) as t FROM tbl_target as tr WHERE tr.mun_id=$municipality AND tr.season='".$season."' AND  tr.year='$seasonYear' AND tr.program='HARVESTING'))*100) as percentage");
       $row = mysqli_fetch_array($query);
       $percent= round($row['percentage']);
       if ($percent>100){

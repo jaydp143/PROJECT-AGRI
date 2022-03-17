@@ -101,7 +101,7 @@ if (isset($_POST['deleteBtn']))
                             </thead>
                             <tbody>
                                 <?php
-                                    $query = mysqli_query($connection,"SELECT mn.mun_id, mn.municipality, tg.year, tg.target_id, tg.season, tg.program, tg.target FROM tbl_target as tg INNER JOIN tbl_municipality as mn ON tg.mun_id=mn.mun_id");
+                                    $query = mysqli_query($connection,"SELECT mn.mun_id, mn.municipality, tg.year, tg.target_id, tg.season, tg.program, tg.target FROM tbl_target as tg INNER JOIN tbl_municipality as mn ON tg.mun_id=mn.mun_id ORDER BY tg.season ASC");
                                     while($row = mysqli_fetch_array($query))
                                     {      
                                 ?> 
